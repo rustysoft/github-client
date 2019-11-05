@@ -7,9 +7,11 @@ use crate::payload::ErrorPayload;
 use branch::BranchClient;
 use comment::CommentClient;
 use pull_request::PullRequestClient;
+use crate::client::status::StatusClient;
 
 mod branch;
 mod comment;
+mod status;
 mod pull_request;
 
 pub type Result<T> = ::std::result::Result<T, ErrorPayload>;
@@ -48,6 +50,12 @@ impl GithubClient {
 
     pub fn comment(&self) -> CommentClient {
         CommentClient {
+            client: &self.client,
+        }
+    }
+
+    pub fn status(&self) -> StatusClient {
+        StatusClient {
             client: &self.client,
         }
     }
